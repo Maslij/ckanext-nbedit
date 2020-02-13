@@ -66,7 +66,6 @@ class JServerController(toolkit.BaseController):
                 'shared_secret': '',
                 'space_key': '',
                 'content_id': id,
-                'notebook_server_image': plugin.notebook_server_image()
             })
             has_started = False
             retry_count = 0
