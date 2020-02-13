@@ -9,7 +9,9 @@ log = logging.getLogger('ckanext-nbedit')
 def start_server(context, data_dict):
     log.debug('action:start_server')
     jhub_api_url = get_or_bust(data_dict, 'jhub_api_url')
+    log.debug('jhub_api_url: '+jhub_api_url)
     user_id = get_or_bust(data_dict, 'user_id')
+    log.debug('user_id: '+user_id)
     notebook_server_image = get_or_bust(data_dict, 'notebook_server_image')
     log.debug('notebook_server_image: ' + notebook_server_image)
     url = '{}/users/{}/server'.format(jhub_api_url, user_id)
@@ -34,12 +36,15 @@ def start_server(context, data_dict):
             'SPACE_KEY': get_or_bust(data_dict, 'space_key')
         }
     }
+    log.debug('status:notebook_image_check')
     if notebook_server_image is not None:
         kubespawner_override.update({ 'image': notebook_server_image })
-
+        
+    log.debug('status:notebook_spawn_pre')
     resp = requests.post(url, headers=headers, json={
         'kubespawner_override': kubespawner_override
     })
+    log.debug('status:notebook_spawn_post')
     status_code = resp.status_code
     if status_code < 200 or status_code > 299:
         resp.raise_for_status()
