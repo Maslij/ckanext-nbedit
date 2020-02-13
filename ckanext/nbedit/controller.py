@@ -66,8 +66,6 @@ class JServerController(toolkit.BaseController):
                 'shared_secret': '',
                 'space_key': '',
                 'content_id': id,
-                'redis_host': plugin.redis_host(),
-                'redis_password': plugin.redis_password(),
                 'notebook_server_image': plugin.notebook_server_image()
             })
             has_started = False
